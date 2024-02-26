@@ -13,3 +13,26 @@ variable "account" {
   type        = string
   default     = "account"
 }
+
+variable "read_only_groups" {
+  type = list(string)
+  default = [
+    "RO_Group_Display_Name_1",
+    #"RO_Group_Display_Name_2",
+  ]
+}
+
+
+variable "admin_groups" {
+  default = [
+    "ADMIN_Group_Display_Name_1",
+    #"ADMIN_Group_Display_Name_2",
+  ]
+  type = list(string)
+}
+
+variable "notification_emails" {
+  default = [
+    "info@digitalis.io"
+  ]
+}

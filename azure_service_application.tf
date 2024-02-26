@@ -19,7 +19,7 @@ resource "azuread_service_principal" "azuread_service_principal" {
     gallery               = false
     hide                  = false
   }
-  notification_email_addresses  = local.notification_emails
+  notification_email_addresses  = var.notification_emails
   preferred_single_sign_on_mode = "saml"
   use_existing                  = true
 }
@@ -91,16 +91,16 @@ resource "azuread_application_app_role" "azuread_aws_app_role" {
   value                = "${aws_iam_role.aws_read_only_group_policy.arn},${aws_iam_saml_provider.aws_saml_provider.arn}"
 }
 
-//Get Read Only AWS User Group
+// Get Read Only AWS User Group
 // https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/group
 data "azuread_group" "azuread_read_only_group" {
-  for_each     = toset(local.read_only_groups)
+  for_each     = toset(var.read_only_groups)
   display_name = each.key
 }
 
-//Assign Read Only Group
+// Assign Read Only Group
 resource "azuread_app_role_assignment" "azuread_read_only_user" {
-  for_each            = toset(local.read_only_groups)
+  for_each            = toset(var.read_only_groups)
   depends_on          = [aws_iam_saml_provider.aws_saml_provider]
   app_role_id         = azuread_application_app_role.azuread_aws_app_role.role_id
   principal_object_id = data.azuread_group.azuread_read_only_group[each.key].object_id
@@ -109,7 +109,6 @@ resource "azuread_app_role_assignment" "azuread_read_only_user" {
 
 // Admin Role
 // ---------------------------------------------------------- //
-
 resource "azuread_application_app_role" "azuread_admin_aws_app_role" {
   depends_on = [
     aws_iam_saml_provider.aws_saml_provider,
@@ -123,17 +122,17 @@ resource "azuread_application_app_role" "azuread_admin_aws_app_role" {
   value                = "${aws_iam_role.aws_admin_group_policy.arn},${aws_iam_saml_provider.aws_saml_provider.arn}"
 }
 
-//Get Digitalis Admin User Group
+// Get Admin User Group
 // https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/group
 data "azuread_group" "azuread_admin_group" {
-  for_each     = toset(local.admin_groups)
+  for_each     = toset(var.admin_groups)
   display_name = each.key
 }
 
-// Assign Digitalis Admin User Group
+// Assign Admin User Group
 // https://registry.terraform.io/providers/hashicorp/azuread/2.44.1/docs/resources/app_role_assignment
 resource "azuread_app_role_assignment" "azuread_digitalis_admins" {
-  for_each            = toset(local.admin_groups)
+  for_each            = toset(var.admin_groups)
   depends_on          = [aws_iam_saml_provider.aws_saml_provider]
   app_role_id         = azuread_application_app_role.azuread_admin_aws_app_role.role_id
   principal_object_id = data.azuread_group.azuread_admin_group[each.key].object_id
