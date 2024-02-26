@@ -12,7 +12,7 @@ resource "time_sleep" "wait_60_seconds" {
 
 data "http" "azure_metadata_xml" {
   depends_on = [time_sleep.wait_60_seconds]
-  url        = "https://login.microsoftonline.com/${azuread_service_principal.azuread_service_principal.application_tenant_id}/federationmetadata/2007-06/federationmetadata.xml?appid=${azuread_service_principal.azuread_service_principal.application_id}"
+  url        = "https://login.microsoftonline.com/${azuread_service_principal.azuread_service_principal.application_tenant_id}/federationmetadata/2007-06/federationmetadata.xml?appid=${azuread_service_principal.azuread_service_principal.client_id}"
 }
 
 # resource "vault_generic_secret" "metadata_sso_xml" {
