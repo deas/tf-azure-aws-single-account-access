@@ -9,10 +9,10 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 5.10"
     }
-    awscc = {
-      source  = "hashicorp/awscc"
-      version = "~> 0.57.0"
-    }
+    # awscc = {
+    #   source  = "hashicorp/awscc"
+    #   version = "~> 0.57.0"
+    # }
     azuread = {
       source  = "hashicorp/azuread"
       version = "2.44.0"
@@ -25,32 +25,32 @@ terraform {
       source  = "hashicorp/http"
       version = "3.4.0"
     }
-    vault = {
-      source  = "hashicorp/vault"
-      version = "~> 3.19.0"
-    }
+    # vault = {
+    #   source  = "hashicorp/vault"
+    #   version = "~> 3.19.0"
+    # }
   }
 }
 
 // set these as ENV vars or use the Makefile
-provider "aws" {
-  region = var.region
-  default_tags {
-    tags = local.aws_tags
-  }
-}
+# provider "aws" {
+#   region = var.region
+#   default_tags {
+#     tags = local.aws_tags
+#   }
+# }
 
-provider "awscc" {
-  region = var.region
-}
-
-provider "azuread" {
-}
-
-provider "http" {
-}
-
-provider "vault" {
-}
+# provider "awscc" {
+#   region = var.region
+# }
+# 
+# provider "azuread" {
+# }
+# 
+# provider "http" {
+# }
+# 
+# provider "vault" {
+# }
 
 data "aws_caller_identity" "current" {}

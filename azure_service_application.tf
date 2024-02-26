@@ -12,7 +12,7 @@ resource "random_uuid" "azuread_admin_app_role_id" {
 resource "azuread_service_principal" "azuread_service_principal" {
   account_enabled              = true
   app_role_assignment_required = true
-  application_id               = data.azuread_application.azuread_aws_sso_application.application_id
+  client_id                    = data.azuread_application.azuread_aws_sso_application.client_id
   feature_tags {
     custom_single_sign_on = false
     enterprise            = true
@@ -133,7 +133,7 @@ data "azuread_group" "azuread_admin_group" {
 // Assign Digitalis Admin User Group
 // https://registry.terraform.io/providers/hashicorp/azuread/2.44.1/docs/resources/app_role_assignment
 resource "azuread_app_role_assignment" "azuread_digitalis_admins" {
-  for_each     = toset(local.admin_groups)
+  for_each            = toset(local.admin_groups)
   depends_on          = [aws_iam_saml_provider.aws_saml_provider]
   app_role_id         = azuread_application_app_role.azuread_admin_aws_app_role.role_id
   principal_object_id = data.azuread_group.azuread_admin_group[each.key].object_id

@@ -1,13 +1,13 @@
 locals {
 
-  aws_tags = {
-    Env        = var.env
-    Repository = "https://github.com/digitalis-io/tf-azure-aws-single-account-access"
-    Disposable = "false"
-    Scalable   = "true"
-    Region     = var.region
-    Account    = var.account
-  }
+  # aws_tags = {
+  #   Env        = var.env
+  #   Repository = "https://github.com/digitalis-io/tf-azure-aws-single-account-access"
+  #   Disposable = "false"
+  #   Scalable   = "true"
+  #   Region     = var.region
+  #   Account    = var.account
+  # }
 
   read_only_groups = [
     "RO_Group_Display_Name_1",
@@ -21,6 +21,6 @@ locals {
 
   notification_emails = [
     "info@digitalis.io"
-    ]
+  ]
 
 }

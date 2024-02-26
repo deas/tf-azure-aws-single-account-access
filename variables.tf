@@ -1,11 +1,11 @@
-variable "region" {
-  description = "AWS Region"
-  default     = "eu-west-2"
-}
+# variable "region" {
+#   description = "AWS Region"
+#   default     = "eu-west-2"
+# }
 
 variable "env" {
   description = "Environment that the AWS account is part of, Dev, Test, Prod and PreProd are some examples"
-  default     = "Dev" 
+  default     = "Prod"
 }
 
 variable "account" {
